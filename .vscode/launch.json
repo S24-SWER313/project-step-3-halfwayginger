@@ -19,6 +19,46 @@
             "projectName": "config-server",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CurrencyExchangeService<8000>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.lab.currencyexchangeservice.CurrencyExchangeServiceApplication",
+            "projectName": "currency-exchange-service",
+            "args": "--server.port=8000",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=63702 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=currency-exchange-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CurrencyExchangeService<8001>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.lab.currencyexchangeservice.CurrencyExchangeServiceApplication",
+            "projectName": "currency-exchange-service",
+            "args": "--server.port=8001"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CurrencyConversionServiceApplication<currency-conversion-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.rawan.currencyconversionservice.CurrencyConversionServiceApplication",
+            "projectName": "currency-conversion-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NamingServerApplication<naming-server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.rawan.namingserver.NamingServerApplication",
+            "projectName": "naming-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
