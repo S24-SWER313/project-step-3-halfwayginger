@@ -1,15 +1,15 @@
-package com.rawan.currencyconversionservice;
+// package com.rawan.currencyconversionservice;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+// import org.springframework.boot.SpringApplication;
+// import org.springframework.boot.autoconfigure.SpringBootApplication;
+// import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
-@EnableFeignClients("com.rawan.currencyconversionservice")
-public class CurrencyConversionServiceApplication {
+// @SpringBootApplication
+// @EnableFeignClients("com.rawan.currencyconversionservice")
+// public class CurrencyConversionServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CurrencyConversionServiceApplication.class, args);
-	}
+// public static void main(String[] args) {
+// SpringApplication.run(CurrencyConversionServiceApplication.class, args);
+// }
 
-}
+// }

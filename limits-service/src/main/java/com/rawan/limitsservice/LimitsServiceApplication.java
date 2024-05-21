@@ -1,15 +1,15 @@
-package com.rawan.limitsservice;
+// package com.rawan.limitsservice;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+// import org.springframework.boot.SpringApplication;
+// import org.springframework.boot.autoconfigure.SpringBootApplication;
+// import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
-@EnableDiscoveryClient
-public class LimitsServiceApplication {
+// @SpringBootApplication
+// @EnableDiscoveryClient
+// public class LimitsServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LimitsServiceApplication.class, args);
-	}
+// public static void main(String[] args) {
+// SpringApplication.run(LimitsServiceApplication.class, args);
+// }
 
-}
+// }
