@@ -1,0 +1,88 @@
+package edu.bethlehem.post_service.Post;
+
+import java.lang.reflect.Method;
+import java.util.stream.Collectors;
+
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+@Data
+public class PostService {
+
+    private final PostRepository postRepository;
+    private final PostModelAssembler assembler;
+
+    public Post convertPostDtoToPostEntity(Long userId, PostRequestDTO postRequestDTO) {
+        return Post.builder()
+                .content(postRequestDTO.getContent())
+                .userId(userId)
+                .build();
+    }
+
+    public EntityModel<Post> findPostById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId));
+
+        ;
+
+        return assembler.toModel(post);
+    }
+
+    public CollectionModel<EntityModel<Post>> findAllPosts() {
+        return CollectionModel.of(postRepository
+                .findAll()
+                .stream()
+                .map(assembler::toModel)
+                .collect(Collectors.toList()));
+    }
+
+    public Post savePost(Post post) {
+        return postRepository.save(post);
+    }
+
+    public EntityModel<Post> createPost(Long userId, PostRequestDTO newPostRequestDTO) {
+        Post newPost = convertPostDtoToPostEntity(userId, newPostRequestDTO);
+        newPost = savePost(newPost);
+        return assembler.toModel(newPost);
+    }
+
+    public EntityModel<Post> updatePostPartially(Long postId,
+            PostRequestPatchDTO newPostRequestDTO) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.UNPROCESSABLE_ENTITY));
+
+        try {
+            for (Method method : PostRequestPatchDTO.class.getMethods()) {
+                if (method.getName().startsWith("get") && method.getParameterCount() == 0) {
+                    Object value = method.invoke(newPostRequestDTO);
+                    if (value != null) {
+                        String propertyName = method.getName().substring(3); // remove "get"
+                        if (propertyName.equals("Class")) // Class is a reserved keyword in Java
+                            continue;
+                        Method setter = Post.class.getMethod("set" + propertyName, method.getReturnType());
+                        setter.invoke(post, value);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return assembler.toModel(postRepository.save(post));
+
+    }
+
+    public void deletePost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.UNPROCESSABLE_ENTITY));
+
+        postRepository.delete(post);
+    }
+
+}
