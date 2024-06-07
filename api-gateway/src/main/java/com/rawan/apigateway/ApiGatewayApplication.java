@@ -33,6 +33,12 @@ public class ApiGatewayApplication {
 								.setName("rawan")
 								.setFallbackUri("forward:/fallback-error")))
 						.uri("lb://currency-exchange-service"))
+				.route(p -> p
+						.path("/posts/**")
+						.filters(f -> f.circuitBreaker(config -> config
+								.setName("fall")
+								.setFallbackUri("forward:/fallback-error")))
+						.uri("lb://post-service"))
 				.build();
 	}
 

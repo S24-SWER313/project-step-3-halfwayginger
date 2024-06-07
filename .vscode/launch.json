@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NamingServerApplication",
+            "request": "launch",
+            "mainClass": "edu.bethlehem.namingserver.NamingServerApplication",
+            "projectName": "naming-server"
+        },
+        {
+            "type": "java",
             "name": "PostServiceApplication",
             "request": "launch",
             "mainClass": "edu.bethlehem.post_service.PostServiceApplication",
@@ -90,7 +97,8 @@
             "mainClass": "edu.bethlehem.post_service.PostServiceApplication",
             "projectName": "post-service",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=51322 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=post-service"
         },
         {
             "type": "java",
