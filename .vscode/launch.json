@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PostServiceApplication",
+            "request": "launch",
+            "mainClass": "edu.bethlehem.post_service.PostServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-LimitsServiceApplication<limits-service>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -71,6 +78,27 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.rawan.apigateway.ApiGatewayApplication",
             "projectName": "api-gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=53621 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=api-gateway"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PostServiceApplication<post-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "edu.bethlehem.post_service.PostServiceApplication",
+            "projectName": "post-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthServiceApplication<auth-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "edu.bethlehem.authservice.AuthServiceApplication",
+            "projectName": "auth-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
