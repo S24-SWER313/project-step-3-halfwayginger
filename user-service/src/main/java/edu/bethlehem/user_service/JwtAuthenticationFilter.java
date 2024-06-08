@@ -1,6 +1,5 @@
 package edu.bethlehem.user_service;
 
-
 import java.io.IOException;
 import java.util.Date;
 
@@ -29,9 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-
     private final UserDetailsService userDetailsService;
-
     private final ObjectMapper objectMapper;
 
     @Override
@@ -55,12 +52,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userEmail = jwtService.extractUsername(jwtToken);
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetailst = this.userDetailsService.loadUserByUsername(userEmail);
-                UserDetailsImpl userDetails = (UserDetailsImpl) userDetailst;
-                if (jwtService.isTokenValid(jwtToken, userDetails)) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+                if (jwtService.isTokenValid(jwtToken, (UserDetailsImpl) userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
-                            null);
+                            null,
+                            userDetails.getAuthorities());
 
                     authToken.setDetails(request);
 
@@ -93,5 +90,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
     }
-
 }

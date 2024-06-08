@@ -107,22 +107,22 @@ public class AppUser implements UserDetailsImpl{
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetailsImpl.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetailsImpl.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetailsImpl.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetailsImpl.super.isEnabled();
+        return true;
     }
 
     // @Override

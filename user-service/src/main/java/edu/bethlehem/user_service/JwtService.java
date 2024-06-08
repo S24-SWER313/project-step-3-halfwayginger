@@ -1,6 +1,5 @@
 package edu.bethlehem.user_service;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -38,7 +36,7 @@ public class JwtService {
     public Long extractId(Authentication authentication) {
         Map<String, Object> attributes;
 
-     if (authentication instanceof JwtAuthenticationToken) {
+        if (authentication instanceof JwtAuthenticationToken) {
             attributes = ((JwtAuthenticationToken) authentication).getTokenAttributes();
             logger.trace("The Auth Token Type is From JwtAuthenticationToken, the User who tries to authenticate is "
                     + attributes.toString());
@@ -51,11 +49,11 @@ public class JwtService {
 
     public AppUser getUser(Authentication authentication) {
         Long userId = extractId(authentication);
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found"));
     }
 
     public AppUser getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found"));
     }
 
     public Instant extractIssuedAt(String jwtToken) {
@@ -150,5 +148,4 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
 
     }
-
 }
