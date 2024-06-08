@@ -22,33 +22,4 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthController {
 
-    private AppUserRepository appUserRepository;
-    private PasswordEncoder passwordEncoder;
-    private AuthenticationManager authenticationManager;
-
-    @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-
-        if (appUserRepository.existsByUsername(registerDto.getUsername())) {
-            return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
-        }
-
-        AppUser appUser = new AppUser();
-        appUser.setUsername(registerDto.getUsername());
-        appUser.setPassword(passwordEncoder.encode((registerDto.getPassword())));
-
-        appUserRepository.save(appUser);
-
-        return new ResponseEntity<>("User registered success!", HttpStatus.OK);
-    }
-
-    @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody RegisterDto loginDto) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String response = "You have successfully logged in!";
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }
