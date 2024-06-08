@@ -57,7 +57,7 @@ public class AuthController {
             Authentication authentication
     ){
         HashMap<String,String> response = new HashMap<>();
-        response.put("isVerified",String.valueOf(authService.verifyToken(authentication)));
+        response.put("isVerified Jwt Token",String.valueOf(authService.verifyToken(authentication)));
         return ResponseEntity.ok(response);
     }
 }
