@@ -1,6 +1,7 @@
 package edu.bethlehem.user_service;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -24,6 +25,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 // @Entity
 // @Table(name = "_user")
@@ -37,7 +39,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "_user") // Specify the custom table name here
-public class AppUser {
+public class AppUser implements UserDetailsImpl{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,6 +99,31 @@ public class AppUser {
     private String contactEmail;
 
     private String contactPhoneNumber;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetailsImpl.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetailsImpl.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetailsImpl.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetailsImpl.super.isEnabled();
+    }
 
     // @Override
     // public Collection<? extends GrantedAuthority> getAuthorities() {

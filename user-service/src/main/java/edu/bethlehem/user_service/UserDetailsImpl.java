@@ -1,18 +1,13 @@
 package edu.bethlehem.user_service;
 
 import org.json.JSONObject;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserDetailsImpl {
+public interface UserDetailsImpl extends UserDetails {
+    public Long id = 0L;
 
-    // TODO
-    public String getUsername() {
-        return null;
-    }
+    public String getUsername();
 
 
-    //TODO
-    public Long getId() {
-
-        return null;
-    }
+    public Long getId() ;
 }

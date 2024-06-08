@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -50,11 +51,11 @@ public class JwtService {
 
     public AppUser getUser(Authentication authentication) {
         Long userId = extractId(authentication);
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found"));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
     }
 
     public AppUser getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found"));
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
     }
 
     public Instant extractIssuedAt(String jwtToken) {
