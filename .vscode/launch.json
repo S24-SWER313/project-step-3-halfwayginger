@@ -2,10 +2,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "UserServiceApplication",
+            "request": "launch",
+            "mainClass": "edu.bethlehem.user_service.UserServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "NamingServerApplication",
             "request": "launch",
             "mainClass": "edu.bethlehem.namingserver.NamingServerApplication",
-            "projectName": "naming-server"
+            "projectName": "naming-server",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56006 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=naming-server"
         },
         {
             "type": "java",
@@ -107,6 +115,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "edu.bethlehem.authservice.AuthServiceApplication",
             "projectName": "auth-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-UserServiceApplication<user-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "edu.bethlehem.user_service.UserServiceApplication",
+            "projectName": "user-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
