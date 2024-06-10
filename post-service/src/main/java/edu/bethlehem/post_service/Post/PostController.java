@@ -33,6 +33,11 @@ public class PostController {
     return ResponseEntity.ok(postService.findPostById(postId));
   }
 
+  @GetMapping("/exi/{postId}")
+  public Boolean existes(@PathVariable long postId) {
+    return postService.existes(postId);
+  }
+
   @GetMapping()
   public ResponseEntity<CollectionModel<EntityModel<Post>>> all() {
     CollectionModel<EntityModel<Post>> posts = postService.findAllPosts();

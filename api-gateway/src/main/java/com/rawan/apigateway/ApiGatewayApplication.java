@@ -38,13 +38,13 @@ public class ApiGatewayApplication {
 						.filters(f -> f.circuitBreaker(config -> config
 								.setName("fall")
 								.setFallbackUri("forward:/fallback-error")))
-						.uri("lb://post-service"))
+						.uri("lb://interaction-service"))
 				.route(p -> p
 						.path("/opinions/**")
 						.filters(f -> f.circuitBreaker(config -> config
 								.setName("fall")
 								.setFallbackUri("forward:/fallback-error")))
-						.uri("lb://post-service"))
+						.uri("lb://opinion-service"))
 				.route(p -> p
 						.path("/auth/**")
 						.filters(f -> f.circuitBreaker(config -> config

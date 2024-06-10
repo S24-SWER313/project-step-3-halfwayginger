@@ -7,9 +7,9 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import edu.bethlehem.post_service.Post.PostNotFoundException;
-import edu.bethlehem.post_service.Post.PostRepository;
-import edu.bethlehem.post_service.Security.JwtServiceProxy;
+import edu.bethlehem.opinion_service.Error.GeneralException;
+import edu.bethlehem.opinion_service.Proxies.JwtServiceProxy;
+import edu.bethlehem.opinion_service.Proxies.PostServiceProxy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -18,18 +18,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OpinionService {
 
-        private final PostRepository postRepository;
         private final OpinionRepository opinionRepository;
         private final JwtServiceProxy jwtServiceProxy;
         private final OpinionModelAssembler assembler;
+        private final PostServiceProxy postServiceProxy;
 
         public Opinion convertOpinionDtoToOpinionEntity(OpinionDTO opinionDTO, Long userId) {
 
                 return Opinion.builder()
                                 .content(opinionDTO.getContent())
-                                .post(postRepository.findById(opinionDTO.getPostId())
-                                                .orElseThrow(() -> new PostNotFoundException(
-                                                                opinionDTO.getPostId())))
+                                .postId(opinionDTO.getPostId())
                                 .userId(userId)
                                 .build();
 
@@ -41,6 +39,14 @@ public class OpinionService {
                 return assembler.toModel(opinion);
         }
 
+        public Boolean exists(Long opinionId) {
+                Opinion opinion = opinionRepository.findById(opinionId)
+                                .orElse(null);
+                if (opinion == null)
+                        return false;
+                return true;
+        }
+
         public List<EntityModel<Opinion>> getAllOpinions() {
                 return opinionRepository.findAll().stream().map(assembler::toModel)
                                 .collect(Collectors.toList());
@@ -48,6 +54,11 @@ public class OpinionService {
 
         public EntityModel<Opinion> postOpinion(OpinionDTO newOpinionDTO, String jwt) {
                 Long userId = jwtServiceProxy.extractUserId(jwt);
+                // postServiceProxy.existes(newOpinionDTO.getPostId());
+                if (postServiceProxy.existes(newOpinionDTO.getPostId()) == false)
+                        throw new GeneralException("Post with Id: " + newOpinionDTO.getPostId() + " Is Not Found",
+                                        HttpStatus.NOT_FOUND);
+                // check if post exists
                 Opinion newOpinion = convertOpinionDtoToOpinionEntity(newOpinionDTO, userId);
                 return assembler.toModel(opinionRepository.save(newOpinion));
         }

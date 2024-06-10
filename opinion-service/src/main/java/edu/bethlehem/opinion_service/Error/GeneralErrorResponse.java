@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Error;
+package edu.bethlehem.opinion_service.Error;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

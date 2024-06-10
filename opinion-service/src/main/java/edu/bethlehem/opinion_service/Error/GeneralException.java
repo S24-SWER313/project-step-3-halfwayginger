@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Error;
+package edu.bethlehem.opinion_service.Error;
 
 import org.springframework.http.HttpStatus;
 

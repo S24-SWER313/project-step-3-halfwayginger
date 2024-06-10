@@ -14,10 +14,10 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import edu.bethlehem.post_service.Post.Post;
-import edu.bethlehem.post_service.Post.PostNotFoundException;
-import edu.bethlehem.post_service.Post.PostRepository;
-import edu.bethlehem.post_service.Proxies.JwtServiceProxy;
+import edu.bethlehem.interaction_service.Error.GeneralException;
+import edu.bethlehem.interaction_service.Proxies.JwtServiceProxy;
+import edu.bethlehem.interaction_service.Proxies.OpinionServiceProxy;
+import edu.bethlehem.interaction_service.Proxies.PostServiceProxy;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class InteractionService {
 
         private final InteractionRepository interactionRepository;
-        private final PostRepository postRepository;
         private final InteractionModelAssembler assembler;
+        private final PostServiceProxy postServiceProxy;
+        private final OpinionServiceProxy opinionServiceProxy;
         @Autowired
         private JwtServiceProxy jwtServiceProxy;
         Logger logger = LoggerFactory.getLogger(Interaction.class);
@@ -84,7 +85,9 @@ public class InteractionService {
                 logger.trace("Adding Opinion Interaction");
                 Long userId = jwtServiceProxy.extractUserId(jwt);
 
-                // Check if opinion exiests
+                if (opinionServiceProxy.existes(opinionId) == false)
+                        throw new GeneralException("opinion with Id: " + opinionId + " Is Not Found",
+                                        HttpStatus.NOT_FOUND);
 
                 Interaction interaction = interactionRepository.findByInteractorUserIdAndOpinionId(userId, opinionId);
                 if (interaction != null) {
@@ -103,16 +106,15 @@ public class InteractionService {
         }
 
         public EntityModel<Interaction> addPostInteraction(
-                        Long journalId,
+                        Long postId,
                         InteractionRequestDTO interactionDTO,
                         String jwt) {
                 logger.trace("Adding Journal Interaction");
                 Long userId = jwtServiceProxy.extractUserId(jwt);
-
-                Post post = postRepository.findById(
-                                journalId)
-                                .orElseThrow(() -> new PostNotFoundException(journalId, HttpStatus.NOT_FOUND));
-                Interaction interaction = interactionRepository.findByInteractorUserIdAndPost(userId, post);
+                if (postServiceProxy.existes(postId) == false)
+                        throw new GeneralException("Post with Id: " + postId + " Is Not Found",
+                                        HttpStatus.NOT_FOUND);
+                Interaction interaction = interactionRepository.findByInteractorUserIdAndPostId(userId, postId);
                 if (interaction != null) {
                         interaction.setType(interactionDTO.getType());
                         return assembler.toModel(interactionRepository.save(interaction));
@@ -120,7 +122,7 @@ public class InteractionService {
 
                 interaction = new Interaction(interactionDTO.getType(), userId);
 
-                interaction.setPost(post);
+                interaction.setPostId(postId);
                 return assembler.toModel(interactionRepository.save(interaction));
 
         }

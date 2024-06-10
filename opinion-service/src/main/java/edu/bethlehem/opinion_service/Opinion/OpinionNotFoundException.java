@@ -2,7 +2,7 @@ package edu.bethlehem.opinion_service.Opinion;
 
 import org.springframework.http.HttpStatus;
 
-import edu.bethlehem.post_service.Error.GeneralException;
+import edu.bethlehem.opinion_service.Error.GeneralException;
 
 public class OpinionNotFoundException extends GeneralException {
 

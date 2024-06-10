@@ -30,6 +30,12 @@ public class OpinionController {
     return opinionService.getOneOpinion(opinionId);
   }
 
+  @GetMapping("/exi/{opinionId}")
+  public Boolean exists(@PathVariable Long opinionId) {
+
+    return opinionService.exists(opinionId);
+  }
+
   @GetMapping()
   CollectionModel<EntityModel<Opinion>> all() {
 

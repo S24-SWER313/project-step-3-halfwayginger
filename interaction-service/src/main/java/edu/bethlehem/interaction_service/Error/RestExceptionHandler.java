@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Error;
+package edu.bethlehem.interaction_service.Error;
 
 import java.util.ArrayList;
 import java.util.Arrays;

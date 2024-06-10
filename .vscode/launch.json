@@ -126,6 +126,28 @@
             "mainClass": "edu.bethlehem.user_service.UserServiceApplication",
             "projectName": "user-service",
             "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=50479 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=user-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OpinionServiceApplication<opinion-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "edu.bethlehem.opinion_service.OpinionServiceApplication",
+            "projectName": "opinion-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=50730 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=opinion-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-InteractionServiceApplication<interaction-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "edu.bethlehem.interaction_service.InteractionServiceApplication",
+            "projectName": "interaction-service",
+            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]

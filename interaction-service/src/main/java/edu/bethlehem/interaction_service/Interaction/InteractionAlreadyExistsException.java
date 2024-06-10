@@ -2,7 +2,7 @@ package edu.bethlehem.interaction_service.Interaction;
 
 import org.springframework.http.HttpStatus;
 
-import edu.bethlehem.post_service.Error.GeneralException;
+import edu.bethlehem.interaction_service.Error.GeneralException;
 
 public class InteractionAlreadyExistsException extends GeneralException {
 

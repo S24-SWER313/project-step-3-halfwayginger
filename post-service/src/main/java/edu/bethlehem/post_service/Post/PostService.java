@@ -39,6 +39,14 @@ public class PostService {
         return assembler.toModel(post);
     }
 
+    public Boolean existes(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElse(null);
+        if (post == null)
+            return false;
+        return true;
+    }
+
     public CollectionModel<EntityModel<Post>> findAllPosts() {
         return CollectionModel.of(postRepository
                 .findAll()
