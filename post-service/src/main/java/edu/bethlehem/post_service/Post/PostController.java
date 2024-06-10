@@ -3,8 +3,6 @@ package edu.bethlehem.post_service.Post;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.logging.Logger;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
-  private final Logger logger = Logger.getLogger(PostController.class.getName());
   private final PostService postService;
 
   @GetMapping("/{postId}")
