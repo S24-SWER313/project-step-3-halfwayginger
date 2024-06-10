@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Interaction;
+package edu.bethlehem.interaction_service.Interaction;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import edu.bethlehem.post_service.Post.Post;
 import edu.bethlehem.post_service.Post.PostNotFoundException;
 import edu.bethlehem.post_service.Post.PostRepository;
-import edu.bethlehem.post_service.Security.JwtServiceProxy;
+import edu.bethlehem.post_service.Proxies.JwtServiceProxy;
 import lombok.RequiredArgsConstructor;
 
 @Service

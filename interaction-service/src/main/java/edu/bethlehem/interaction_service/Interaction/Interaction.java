@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Interaction;
+package edu.bethlehem.interaction_service.Interaction;
 
 import java.time.LocalDateTime;
 

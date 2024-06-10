@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Security;
+package edu.bethlehem.post_service.Proxies;
 
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.FeignClient;

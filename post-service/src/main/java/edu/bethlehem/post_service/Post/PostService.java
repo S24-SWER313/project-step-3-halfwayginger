@@ -9,7 +9,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import edu.bethlehem.post_service.Security.JwtServiceProxy;
+import edu.bethlehem.post_service.Proxies.JwtServiceProxy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
