@@ -18,7 +18,7 @@ public class PostModelAssembler implements RepresentationModelAssembler<Post, En
                                                 .withSelfRel(),
                                 linkTo(methodOn(PostController.class).all())
                                                 .withRel("posts"),
-                                linkTo(methodOn(PostController.class).createNewPost(null, null))
+                                linkTo(methodOn(PostController.class).createNewPost(null, null, null))
                                                 .withRel("create"),
                                 linkTo(methodOn(PostController.class).updatePostPartially(post.getId(), null))
                                                 .withRel("update"),

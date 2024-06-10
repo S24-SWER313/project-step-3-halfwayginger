@@ -3,6 +3,8 @@ package edu.bethlehem.post_service.Post;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.logging.Logger;
+
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
-
+  private final Logger logger = Logger.getLogger(PostController.class.getName());
   private final PostService postService;
 
   @GetMapping("/{postId}")
@@ -39,9 +42,9 @@ public class PostController {
 
   @PostMapping()
   public ResponseEntity<EntityModel<Post>> createNewPost(Long userId,
-      @RequestBody PostRequestDTO newPostRequestDTO) {
-
-    EntityModel<Post> entityModel = postService.createPost(userId, newPostRequestDTO);
+      @RequestBody PostRequestDTO newPostRequestDTO, @RequestHeader(name = "Authorization") String jwtToken) {
+    logger.info("jwtToken: " + jwtToken + ":");
+    EntityModel<Post> entityModel = postService.createPost(jwtToken, newPostRequestDTO);
     return new ResponseEntity<>(entityModel, HttpStatus.CREATED);
   }
 

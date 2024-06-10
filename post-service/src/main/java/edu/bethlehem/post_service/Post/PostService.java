@@ -3,11 +3,13 @@ package edu.bethlehem.post_service.Post;
 import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import edu.bethlehem.post_service.Security.JwtServiceProxy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostModelAssembler assembler;
+    @Autowired
+    private JwtServiceProxy jwtServiceProxy;
 
     public Post convertPostDtoToPostEntity(Long userId, PostRequestDTO postRequestDTO) {
         return Post.builder()
@@ -47,7 +51,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public EntityModel<Post> createPost(Long userId, PostRequestDTO newPostRequestDTO) {
+    public EntityModel<Post> createPost(String jwt, PostRequestDTO newPostRequestDTO) {
+        Long userId = jwtServiceProxy.extractUserId(jwt);
         Post newPost = convertPostDtoToPostEntity(userId, newPostRequestDTO);
         newPost = savePost(newPost);
         return assembler.toModel(newPost);

@@ -8,5 +8,4 @@ import lombok.experimental.SuperBuilder;
 @Getter(AccessLevel.PUBLIC)
 public class PostRequestDTO {
     private String content;
-    private Long userId;
 }

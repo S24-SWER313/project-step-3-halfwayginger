@@ -28,23 +28,23 @@ public class ApiGatewayApplication {
 						.filters(f -> f.addRequestHeader("Hello", "World"))
 						.uri("http://httpbin.org:80"))
 				.route(p -> p
-						.path("/currency-exchange/**")
-						.filters(f -> f.circuitBreaker(config -> config
-								.setName("rawan")
-								.setFallbackUri("forward:/fallback-error")))
-						.uri("lb://currency-exchange-service"))
-				.route(p -> p
 						.path("/posts/**")
 						.filters(f -> f.circuitBreaker(config -> config
 								.setName("fall")
 								.setFallbackUri("forward:/fallback-error")))
 						.uri("lb://post-service"))
+				.route(p -> p
+						.path("/auth/**")
+						.filters(f -> f.circuitBreaker(config -> config
+								.setName("fall")
+								.setFallbackUri("forward:/fallback-error")))
+						.uri("lb://user-service"))
 				.build();
 	}
 
 	@RequestMapping("/fallback-error")
 	public Mono<String> fallback() {
-		return Mono.just("A problem has occured, please try again later.");
+		return Mono.just("A problem has occured At The API Gateway, please try again later.");
 	}
 
 }
