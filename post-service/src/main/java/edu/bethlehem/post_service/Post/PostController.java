@@ -43,7 +43,6 @@ public class PostController {
   @PostMapping()
   public ResponseEntity<EntityModel<Post>> createNewPost(Long userId,
       @RequestBody PostRequestDTO newPostRequestDTO, @RequestHeader(name = "Authorization") String jwtToken) {
-    logger.info("jwtToken: " + jwtToken + ":");
     EntityModel<Post> entityModel = postService.createPost(jwtToken, newPostRequestDTO);
     return new ResponseEntity<>(entityModel, HttpStatus.CREATED);
   }

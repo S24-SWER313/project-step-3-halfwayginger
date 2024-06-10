@@ -60,6 +60,7 @@ public class PostService {
 
     public EntityModel<Post> updatePostPartially(Long postId,
             PostRequestPatchDTO newPostRequestDTO) {
+
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.UNPROCESSABLE_ENTITY));
 
