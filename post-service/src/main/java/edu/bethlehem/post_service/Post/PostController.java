@@ -50,15 +50,15 @@ public class PostController {
   @PatchMapping("/{id}")
   public ResponseEntity<?> updatePostPartially(@PathVariable(value = "id") Long postId,
 
-      @RequestBody PostRequestPatchDTO newPostRequestDTO) {
+      @RequestBody PostRequestPatchDTO newPostRequestDTO, @RequestHeader(name = "Authorization") String jwtToken) {
 
-    EntityModel<Post> entityModel = postService.updatePostPartially(postId, newPostRequestDTO);
+    EntityModel<Post> entityModel = postService.updatePostPartially(postId, newPostRequestDTO, jwtToken);
     return new ResponseEntity<>(entityModel, HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  ResponseEntity<?> deletePost(@PathVariable Long id) {
-    postService.deletePost(id);
+  ResponseEntity<?> deletePost(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwtToken) {
+    postService.deletePost(id, jwtToken);
 
     return ResponseEntity.noContent().build();
   }

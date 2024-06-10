@@ -20,9 +20,9 @@ public class PostModelAssembler implements RepresentationModelAssembler<Post, En
                                                 .withRel("posts"),
                                 linkTo(methodOn(PostController.class).createNewPost(null, null, null))
                                                 .withRel("create"),
-                                linkTo(methodOn(PostController.class).updatePostPartially(post.getId(), null))
+                                linkTo(methodOn(PostController.class).updatePostPartially(post.getId(), null, null))
                                                 .withRel("update"),
-                                linkTo(methodOn(PostController.class).deletePost(post.getId()))
+                                linkTo(methodOn(PostController.class).deletePost(post.getId(), null))
                                                 .withRel("delete"));
         }
 

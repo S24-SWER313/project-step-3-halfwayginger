@@ -59,11 +59,14 @@ public class PostService {
     }
 
     public EntityModel<Post> updatePostPartially(Long postId,
-            PostRequestPatchDTO newPostRequestDTO) {
+            PostRequestPatchDTO newPostRequestDTO, String jwtToken) {
 
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.UNPROCESSABLE_ENTITY));
+                .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.NOT_FOUND));
 
+        if (post.getUserId() != jwtServiceProxy.extractUserId(jwtToken)) {
+            throw new PostNotFoundException(postId, HttpStatus.UNAUTHORIZED);
+        }
         try {
             for (Method method : PostRequestPatchDTO.class.getMethods()) {
                 if (method.getName().startsWith("get") && method.getParameterCount() == 0) {
@@ -84,10 +87,12 @@ public class PostService {
 
     }
 
-    public void deletePost(Long postId) {
+    public void deletePost(Long postId, String jwtToken) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId, HttpStatus.UNPROCESSABLE_ENTITY));
-
+        if (post.getUserId() != jwtServiceProxy.extractUserId(jwtToken)) {
+            throw new PostNotFoundException(postId, HttpStatus.UNAUTHORIZED);
+        }
         postRepository.delete(post);
     }
 

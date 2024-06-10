@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Opinion;
+package edu.bethlehem.opinion_service.Opinion;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
@@ -37,26 +38,28 @@ public class OpinionController {
   }
 
   @PostMapping()
-  ResponseEntity<?> newOpinion(@RequestBody OpinionDTO newOpinion, Long userId) {
+  ResponseEntity<?> newOpinion(@RequestBody OpinionDTO newOpinion,
+      @RequestHeader(name = "Authorization") String jwtToken) {
 
-    EntityModel<Opinion> entityModel = opinionService.postOpinion(newOpinion, userId);
+    EntityModel<Opinion> entityModel = opinionService.postOpinion(newOpinion, jwtToken);
 
     return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<?> updateOpinionPartially(@PathVariable(value = "id") Long opinionId,
-      @RequestBody OpinionPatchDTO newOpinion) {
+      @RequestBody OpinionPatchDTO newOpinion, @RequestHeader(name = "Authorization") String jwtToken) {
 
-    EntityModel<Opinion> entityModel = opinionService.updateOpinionPartially(opinionId, newOpinion);
+    EntityModel<Opinion> entityModel = opinionService.updateOpinionPartially(opinionId, newOpinion, jwtToken);
 
     return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteOpinion(@PathVariable Long id) {
+  public ResponseEntity<?> deleteOpinion(@PathVariable Long id,
+      @RequestHeader(name = "Authorization") String jwtToken) {
 
-    opinionService.deleteOpinion(id);
+    opinionService.deleteOpinion(id, jwtToken);
     return ResponseEntity.noContent().build();
 
   }

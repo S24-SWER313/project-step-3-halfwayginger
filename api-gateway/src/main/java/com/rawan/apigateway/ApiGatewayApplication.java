@@ -34,6 +34,18 @@ public class ApiGatewayApplication {
 								.setFallbackUri("forward:/fallback-error")))
 						.uri("lb://post-service"))
 				.route(p -> p
+						.path("/interactions/**")
+						.filters(f -> f.circuitBreaker(config -> config
+								.setName("fall")
+								.setFallbackUri("forward:/fallback-error")))
+						.uri("lb://post-service"))
+				.route(p -> p
+						.path("/opinions/**")
+						.filters(f -> f.circuitBreaker(config -> config
+								.setName("fall")
+								.setFallbackUri("forward:/fallback-error")))
+						.uri("lb://post-service"))
+				.route(p -> p
 						.path("/auth/**")
 						.filters(f -> f.circuitBreaker(config -> config
 								.setName("fall")

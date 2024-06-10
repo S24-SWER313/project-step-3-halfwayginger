@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Opinion;
+package edu.bethlehem.opinion_service.Opinion;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -21,9 +21,10 @@ public class OpinionModelAssembler implements RepresentationModelAssembler<Opini
                                                 .withRel("opinions"),
                                 linkTo(methodOn(OpinionController.class).newOpinion(null, null))
                                                 .withRel("create"),
-                                linkTo(methodOn(OpinionController.class).updateOpinionPartially(opinion.getId(), null))
+                                linkTo(methodOn(OpinionController.class).updateOpinionPartially(opinion.getId(), null,
+                                                null))
                                                 .withRel("update"),
-                                linkTo(methodOn(OpinionController.class).deleteOpinion(opinion.getId()))
+                                linkTo(methodOn(OpinionController.class).deleteOpinion(opinion.getId(), null))
                                                 .withRel("delete"));
         }
 

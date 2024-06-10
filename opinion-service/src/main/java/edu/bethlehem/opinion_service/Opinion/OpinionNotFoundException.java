@@ -1,4 +1,4 @@
-package edu.bethlehem.post_service.Opinion;
+package edu.bethlehem.opinion_service.Opinion;
 
 import org.springframework.http.HttpStatus;
 

@@ -10,7 +10,6 @@ import org.hibernate.type.SqlTypes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import edu.bethlehem.post_service.Opinion.Opinion;
 import edu.bethlehem.post_service.Post.Post;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,11 +42,7 @@ public class Interaction {
     @Enumerated(EnumType.STRING)
     private InteractionType type;
 
-    @ManyToOne
-    @JoinColumn(name = "opinion")
-    @JsonIgnore
-    @JsonManagedReference
-    private Opinion opinion;
+    private Long opinionId;
 
     @ManyToOne
     @JoinColumn(name = "journal")

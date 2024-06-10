@@ -14,9 +14,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import edu.bethlehem.post_service.Opinion.Opinion;
-import edu.bethlehem.post_service.Opinion.OpinionNotFoundException;
-import edu.bethlehem.post_service.Opinion.OpinionRepository;
 import edu.bethlehem.post_service.Post.Post;
 import edu.bethlehem.post_service.Post.PostNotFoundException;
 import edu.bethlehem.post_service.Post.PostRepository;
@@ -28,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class InteractionService {
 
         private final InteractionRepository interactionRepository;
-        private final OpinionRepository opinionRepository;
         private final PostRepository postRepository;
         private final InteractionModelAssembler assembler;
         @Autowired
@@ -86,12 +82,11 @@ public class InteractionService {
                         InteractionRequestDTO interactionDTO,
                         String jwt) {
                 logger.trace("Adding Opinion Interaction");
-
                 Long userId = jwtServiceProxy.extractUserId(jwt);
-                Opinion opinion = opinionRepository.findById(
-                                opinionId)
-                                .orElseThrow(() -> new OpinionNotFoundException(opinionId, HttpStatus.NOT_FOUND));
-                Interaction interaction = interactionRepository.findByInteractorUserIdAndOpinion(userId, opinion);
+
+                // Check if opinion exiests
+
+                Interaction interaction = interactionRepository.findByInteractorUserIdAndOpinionId(userId, opinionId);
                 if (interaction != null) {
                         interaction.setType(interactionDTO.getType());
                         return assembler.toModel(interactionRepository.save(interaction));
@@ -99,11 +94,9 @@ public class InteractionService {
                 }
 
                 interaction = new Interaction(interactionDTO.getType(), userId);
-                interaction.setOpinion(opinion);
+                interaction.setOpinionId(opinionId);
 
                 interaction = interactionRepository.save(interaction);
-
-                opinionRepository.save(opinion);
 
                 return assembler.toModel(interaction);
 

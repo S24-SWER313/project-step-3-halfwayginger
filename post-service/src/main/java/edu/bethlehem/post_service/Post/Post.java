@@ -1,13 +1,13 @@
 package edu.bethlehem.post_service.Post;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import edu.bethlehem.post_service.Opinion.Opinion;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,10 +29,6 @@ public class Post {
   private LocalDateTime updateDateTime;
 
   private String content;
-
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  @JoinColumn(name = "journal")
-  private List<Opinion> opinions;
 
   private Long userId;
 
