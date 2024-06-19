@@ -1,0 +1,86 @@
+version: '3'
+services:
+
+  naming-server:
+    image: aaboduh/naming-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  api-gateway:
+    image: aaboduh/api-gateway
+    depends_on:
+      - naming-server
+    environment:
+      - SPRING_APPLICATION_NAME=api-gateway
+      - SERVER_PORT=8765
+      - eureka.client.serviceUrl.defaultZone=http://naming-server:8761/eureka/
+    ports:
+      - "8765:8765"
+    networks:
+      - microservices-network
+
+  interaction-service:
+    image: aaboduh/interaction-service
+    depends_on:
+      - naming-server
+      - api-gateway
+    environment:
+      - SPRING_APPLICATION_NAME=interaction-service
+      - SERVER_PORT=8008
+      - eureka.client.serviceUrl.defaultZone=http://naming-server:8761/eureka/
+    ports:
+      - "8008:8008"
+    networks:
+      - microservices-network
+
+
+  opinion-service:
+    image: aaboduh/opinion-service
+    depends_on:
+      - naming-server
+      - api-gateway
+    environment:
+      - SPRING_APPLICATION_NAME=opinion-service
+      - SERVER_PORT=8007
+      - eureka.client.serviceUrl.defaultZone=http://naming-server:8761/eureka/
+    ports:
+      - "8007:8007"
+    networks:
+      - microservices-network
+
+  post-service:
+    image: aaboduh/post-service
+
+    depends_on:
+      - naming-server
+      - api-gateway
+
+    environment:
+      - SPRING_APPLICATION_NAME=post-service
+      - SERVER_PORT=8005
+      - eureka.client.serviceUrl.defaultZone=http://naming-server:8761/eureka/
+    ports:
+      - "8005:8005"
+    networks:
+      - microservices-network
+
+  user-service:
+    image: aaboduh/user-service
+    depends_on:
+      - naming-server
+      - api-gateway
+
+    environment:
+      - SPRING_APPLICATION_NAME=user-service
+      - SERVER_PORT=8006
+      - eureka.client.serviceUrl.defaultZone=http://naming-server:8761/eureka/
+    ports:
+      - "8006:8006"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
